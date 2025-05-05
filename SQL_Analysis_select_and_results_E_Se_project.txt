@@ -1,0 +1,355 @@
+--1. Set with the largest number of parts each year and average number of parts
+
+--the request below shows the sets with the largest number of parts for each year and average number of parts in sets in this year
+--In 1950 there were several sets which consisted of only one part, so the request for selection of sets with the largest number of parts for each year shows 
+--several rows for 1950, in later years there was only one set 
+
+SELECT tab.set_year,
+		tab.num_parts,
+		tab.set_name,
+		tab.avr_num_parts
+FROM (
+		SELECT set_year,
+				set_name,
+				num_parts,
+				max (num_parts) OVER (PARTITION BY set_year) AS max_parts,
+				round (avg (num_parts) OVER (PARTITION BY set_year ), 2) AS avr_num_parts
+		FROM lego_sets) tab
+WHERE tab.num_parts = tab.max_parts;
+
+set_year|num_parts|set_name                                                 |avr_num_parts|
+--------|---------|---------------------------------------------------------|-------------|
+    1949|      178|Large Gift Set (ABB)                                     |        99.60|
+    1950|        1|Single 2 x 4 Brick (ABB)                                 |         1.00|
+    1950|        1|Single 1 x 2 x 2 Window without Glass (ABB)              |         1.00|
+    1950|        1|Single 1 x 4 x 2 Window without Glass (ABB)              |         1.00|
+    1950|        1|Single 1 x 2 x 3 Window without Glass (ABB)              |         1.00|
+    1950|        1|Single 1 x 2 x 4 Door without Glass (ABB)                |         1.00|
+    1950|        1|Single 2 x 2 Brick (ABB)                                 |         1.00|
+    1953|       48|Automatic Binding Bricks - Small Brick Set (Lego Mursten)|        13.50|
+    1954|       54|Gift Package (Lego Mursten)                              |        12.36|
+    1955|      200|1 x 1 Round Bricks                                       |        36.61|
+    1956|       96|ESSO Filling Station                                     |        18.92|
+    1957|      244|Gift Package                                             |        44.75|
+    1958|      240|1 x 1 Bricks                                             |        41.13|
+    1959|       22|Volkswagen Kit                                           |        16.25|
+    1960|      476|Kindergarten LEGO Set                                    |       175.33|
+    1961|      760|Town Plan - Continental European                         |        58.23|
+    1962|      755|Town Plan - UK, Cardboard box                            |        79.98|
+    1963|      266|Doll Set                                                 |        47.00|
+    1964|      253|Train                                                    |        79.17|
+    1965|      228|38 Slimbricks Assorted Sizes                             |        86.00|
+    1966|      403|Master Mechanic Set                                      |        46.73|
+    1967|      712|Basic Building Set with Train                            |       121.75|
+    1967|      712|Ambassador Set                                           |       121.75|
+    1968|      407|Basic Building Set                                       |       116.44|
+    1969|      797|Town Plan                                                |        75.09|
+    1970|      471|Weetabix Castle                                          |        83.86|
+    1971|      568|Imagination Set 3                                        |        80.33|
+    1972|      901|Denken mit Lego (Thinking with Lego 900pcs)              |       100.77|
+    1973|      665|Basic Set                                                |       101.80|
+    1974|      526|Farm Set                                                 |       116.95|
+    1975|      592|Wild West Scene                                          |       127.79|
+    1976|      683|Educational LEGO Building Set                            |       142.20|
+    1977|      608|Auto Chassis                                             |        87.60|
+    1978|      982|U.S.S. Constellation                                     |       138.59|
+    1979|      512|Mobile Crane                                             |        97.13|
+    1980|      786|Inter-City Passenger Train                               |       112.74|
+    1981|      774|Castle                                                   |        92.98|
+    1982|      744|Super Basic Set                                          |        65.51|
+    1983|      569|Freight Steam Train                                      |        93.81|
+    1984|      895|Community Buildings                                      |        77.74|
+    1985|     1534|Teachers Resource Set                                    |       105.83|
+    1986|      668|Highway Rig                                              |        94.20|
+    1987|      721|Basic Building Set                                       |        65.20|
+    1988|      900|Test Car                                                 |       129.96|
+    1989|      917|Black Seas Barracuda                                     |        91.09|
+    1990|     1534|4.5V Technic Resource Set                                |       169.06|
+    1991|     2195|Giant Lego Topic Set                                     |       130.40|
+    1992|      954|Airtech Claw Rig                                         |       105.54|
+    1993|      924|Skull's Eye Schooner                                     |       126.36|
+    1994|     1344|Super Car                                                |       106.09|
+    1995|     1730|Technology Resource Set                                  |       142.78|
+    1996|     2496|Bonus Lego Basic Town                                    |       154.88|
+    1997|     1417|Giant Lego Dacta Basic Set                               |       112.87|
+    1998|     1712|ROBOLAB Starter Building Set                             |       131.67|
+    1999|     1406|Super Street Sensation                                   |       101.16|
+    2000|     2899|Statue of Liberty                                        |        98.78|
+    2001|     1868|Darth Maul                                               |        97.83|
+    2002|     3115|Imperial Star Destroyer - UCS                            |       102.55|
+    2003|     2847|Lego Mosaic Dino                                         |       148.70|
+    2004|     2000|Better Building More Fun                                 |       133.35|
+    2005|     5462|Star Wars / M&M Mosaic - Promo Set                       |       175.59|
+    2006|     2000|XXL 2000                                                 |       221.71|
+    2007|     5195|Millennium Falcon - UCS                                  |       227.96|
+    2008|     5922|Taj Mahal                                                |       247.23|
+    2009|     3261|Grand Carousel                                           |       185.88|
+    2010|     5200|Window Exploration Bag                                   |       205.85|
+    2011|     3151|Super Star Destroyer                                     |       152.07|
+    2012|     2772|Town Hall                                                |       153.00|
+    2013|     2989|Sydney Opera House                                       |       171.11|
+    2014|     3295|Sandcrawler                                              |       169.95|
+    2015|     9987|The Ultimate Battle for Chima                            |       192.83|
+    2016|     4642|Firehouse Headquarters                                   |       211.99|
+    2017|     7541|UCS Millennium Falcon                                    |       224.38|
+    2018|     6020|Hogwarts Castle                                          |       216.72|
+    2019|     4784|Imperial Star Destroyer                                  |       209.39|
+    2020|     3898|Old Trafford - Manchester United                         |       144.35|
+
+--1a one SET FOR EACH YEAR
+--For illustration purposes we need only one set for 1950
+
+SELECT tab.set_year AS "Year",
+		tab.set_name AS "Largest Set",
+		tab.num_parts AS "Number of Parts in Largest Set",
+		tab.avr_num_parts AS "Average Number of Parts"
+FROM (
+		SELECT set_year,
+				set_name,
+				num_parts,
+				ROW_NUMBER () OVER (PARTITION BY set_year ORDER BY num_parts DESC) AS row_num,
+				round (avg (num_parts) OVER (PARTITION BY set_year ), 2) AS avr_num_parts
+		FROM lego_sets) tab
+WHERE tab.row_num = 1;
+Year|Largest Set                                              |Number of Parts in Largest Set|Average Number of Parts|
+----|---------------------------------------------------------|------------------------------|-----------------------|
+1949|Large Gift Set (ABB)                                     |                           178|                  99.60|
+1950|Single 2 x 4 Brick (ABB)                                 |                             1|                   1.00|
+1953|Automatic Binding Bricks - Small Brick Set (Lego Mursten)|                            48|                  13.50|
+1954|Gift Package (Lego Mursten)                              |                            54|                  12.36|
+1955|1 x 1 Round Bricks                                       |                           200|                  36.61|
+1956|ESSO Filling Station                                     |                            96|                  18.92|
+1957|Gift Package                                             |                           244|                  44.75|
+1958|1 x 1 Bricks                                             |                           240|                  41.13|
+1959|Volkswagen Kit                                           |                            22|                  16.25|
+1960|Kindergarten LEGO Set                                    |                           476|                 175.33|
+1961|Town Plan - Continental European                         |                           760|                  58.23|
+1962|Town Plan - UK, Cardboard box                            |                           755|                  79.98|
+1963|Doll Set                                                 |                           266|                  47.00|
+1964|Train                                                    |                           253|                  79.17|
+1965|38 Slimbricks Assorted Sizes                             |                           228|                  86.00|
+1966|Master Mechanic Set                                      |                           403|                  46.73|
+1967|Ambassador Set                                           |                           712|                 121.75|
+1968|Basic Building Set                                       |                           407|                 116.44|
+1969|Town Plan                                                |                           797|                  75.09|
+1970|Weetabix Castle                                          |                           471|                  83.86|
+1971|Imagination Set 3                                        |                           568|                  80.33|
+1972|Denken mit Lego (Thinking with Lego 900pcs)              |                           901|                 100.77|
+1973|Basic Set                                                |                           665|                 101.80|
+1974|Farm Set                                                 |                           526|                 116.95|
+1975|Wild West Scene                                          |                           592|                 127.79|
+1976|Educational LEGO Building Set                            |                           683|                 142.20|
+1977|Auto Chassis                                             |                           608|                  87.60|
+1978|U.S.S. Constellation                                     |                           982|                 138.59|
+1979|Mobile Crane                                             |                           512|                  97.13|
+1980|Inter-City Passenger Train                               |                           786|                 112.74|
+1981|Castle                                                   |                           774|                  92.98|
+1982|Super Basic Set                                          |                           744|                  65.51|
+1983|Freight Steam Train                                      |                           569|                  93.81|
+1984|Community Buildings                                      |                           895|                  77.74|
+1985|Teachers Resource Set                                    |                          1534|                 105.83|
+1986|Highway Rig                                              |                           668|                  94.20|
+1987|Basic Building Set                                       |                           721|                  65.20|
+1988|Test Car                                                 |                           900|                 129.96|
+1989|Black Seas Barracuda                                     |                           917|                  91.09|
+1990|4.5V Technic Resource Set                                |                          1534|                 169.06|
+1991|Giant Lego Topic Set                                     |                          2195|                 130.40|
+1992|Airtech Claw Rig                                         |                           954|                 105.54|
+1993|Skull's Eye Schooner                                     |                           924|                 126.36|
+1994|Super Car                                                |                          1344|                 106.09|
+1995|Technology Resource Set                                  |                          1730|                 142.78|
+1996|Bonus Lego Basic Town                                    |                          2496|                 154.88|
+1997|Giant Lego Dacta Basic Set                               |                          1417|                 112.87|
+1998|ROBOLAB Starter Building Set                             |                          1712|                 131.67|
+1999|Super Street Sensation                                   |                          1406|                 101.16|
+2000|Statue of Liberty                                        |                          2899|                  98.78|
+2001|Darth Maul                                               |                          1868|                  97.83|
+2002|Imperial Star Destroyer - UCS                            |                          3115|                 102.55|
+2003|Lego Mosaic Dino                                         |                          2847|                 148.70|
+2004|Better Building More Fun                                 |                          2000|                 133.35|
+2005|Star Wars / M&M Mosaic - Promo Set                       |                          5462|                 175.59|
+2006|XXL 2000                                                 |                          2000|                 221.71|
+2007|Millennium Falcon - UCS                                  |                          5195|                 227.96|
+2008|Taj Mahal                                                |                          5922|                 247.23|
+2009|Grand Carousel                                           |                          3261|                 185.88|
+2010|Window Exploration Bag                                   |                          5200|                 205.85|
+2011|Super Star Destroyer                                     |                          3151|                 152.07|
+2012|Town Hall                                                |                          2772|                 153.00|
+2013|Sydney Opera House                                       |                          2989|                 171.11|
+2014|Sandcrawler                                              |                          3295|                 169.95|
+2015|The Ultimate Battle for Chima                            |                          9987|                 192.83|
+2016|Firehouse Headquarters                                   |                          4642|                 211.99|
+2017|UCS Millennium Falcon                                    |                          7541|                 224.38|
+2018|Hogwarts Castle                                          |                          6020|                 216.72|
+2019|Imperial Star Destroyer                                  |                          4784|                 209.39|
+2020|Old Trafford - Manchester United                         |                          3898|                 144.35|
+--2. top 3 colors IN EACH YEAR by number of parts of this color
+SELECT tab2.set_year AS "Year",
+		tab2.color_name AS "Color"
+FROM (
+		(SELECT *,
+				ROW_NUMBER () OVER (PARTITION BY tab.set_year ORDER BY tab.sum_color_parts DESC)
+		FROM 
+				(SELECT ls.set_year,
+						ip.color_id,
+						c.color_name,
+						sum(sum(ip.quantity)) OVER (PARTITION BY ls.set_year, ip.color_id) AS sum_color_parts
+				FROM inventory_parts ip 
+				INNER JOIN inventories i 
+				ON i.inventory_id =ip.inventory_id 
+				INNER JOIN lego_sets ls
+				ON ls.set_num = i.set_num 
+				INNER JOIN colors c
+				ON c.color_id =ip.color_id
+				GROUP BY ls.set_year,
+						ip.color_id,
+						c.color_name) tab))tab2
+WHERE row_number<=3;
+Year|Color            |
+----|-----------------|
+1949|White            |
+1949|Green            |
+1949|Red              |
+1950|Blue             |
+1950|Green            |
+1950|Red              |
+1953|Red              |
+1953|Green            |
+1953|Yellow           |
+1954|Red              |
+1954|White            |
+1954|Yellow           |
+1955|White            |
+1955|Red              |
+1955|Blue             |
+1956|White            |
+1956|Red              |
+1956|Trans-Clear      |
+1957|White            |
+1957|Red              |
+1957|Blue             |
+1958|White            |
+1958|Red              |
+1958|Blue             |
+1959|Red              |
+1959|Blue             |
+1959|Yellow           |
+1960|White            |
+1960|Red              |
+1960|Blue             |
+1961|White            |
+1961|Red              |
+1961|Trans-Clear      |
+
+--2a to check whether the calculation is correct I suggest to select 
+--all information related to 1950 and blue color(color id = 1)
+--the result of this below request will show that blue brick is used once in 10 different version of sets
+--(please refer to the project description for more details)
+--so blue color is used 10 times in all sets issued in 1950, which supports my calculation above
+SELECT *
+FROM inventory_parts ip 
+INNER JOIN inventories i 
+ON i.inventory_id =ip.inventory_id 
+INNER JOIN lego_sets ls
+ON ls.set_num = i.set_num 
+INNER JOIN colors c
+ON c.color_id =ip.color_id
+WHERE  ls.set_year =1950 AND ip.color_id=1;
+inventory_id|part_num|color_id|quantity|is_spare|inventory_id|inv_vers|set_num  |set_num  |set_name                |set_year|theme_id|num_parts|color_id|color_name|hex   |is_trans|
+------------|--------|--------|--------|--------|------------|--------|---------|---------|------------------------|--------|--------|---------|--------|----------|------|--------|
+       24230|bslot04 |       1|       1|false   |       24230|       2|700.1.1-1|700.1.1-1|Single 2 x 4 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       24231|bslot04 |       1|       1|false   |       24231|       3|700.1.1-1|700.1.1-1|Single 2 x 4 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       24232|bslot04 |       1|       1|false   |       24232|       4|700.1.1-1|700.1.1-1|Single 2 x 4 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       24233|bslot04 |       1|       1|false   |       24233|       5|700.1.1-1|700.1.1-1|Single 2 x 4 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       24234|bslot02 |       1|       1|false   |       24234|       2|700.1.2-1|700.1.2-1|Single 2 x 2 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       24235|bslot02 |       1|       1|false   |       24235|       3|700.1.2-1|700.1.2-1|Single 2 x 2 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       24236|bslot02 |       1|       1|false   |       24236|       4|700.1.2-1|700.1.2-1|Single 2 x 2 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       24237|bslot02 |       1|       1|false   |       24237|       5|700.1.2-1|700.1.2-1|Single 2 x 2 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       11563|bslot02 |       1|       1|false   |       11563|       1|700.1.2-1|700.1.2-1|Single 2 x 2 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+       11831|bslot04 |       1|       1|false   |       11831|       1|700.1.1-1|700.1.1-1|Single 2 x 4 Brick (ABB)|    1950|     371|        1|       1|Blue      |0055BF|false   |
+
+--3 top 3 colors IN EACH theme
+
+SELECT tab2.theme_name AS "Theme",
+		tab2.color_name AS "Color"
+FROM (
+		(SELECT *,
+				ROW_NUMBER () OVER (PARTITION BY tab.theme_id ORDER BY tab.sum_color_parts DESC)
+		FROM 
+				(SELECT ls.theme_id,
+						t.theme_name,
+						ip.color_id,
+						c.color_name,
+						sum(sum(ip.quantity)) OVER (PARTITION BY ls.theme_id, ip.color_id) AS sum_color_parts
+				FROM inventory_parts ip 
+				INNER JOIN inventories i 
+				ON i.inventory_id =ip.inventory_id 
+				INNER JOIN lego_sets ls
+				ON ls.set_num = i.set_num 
+				INNER JOIN colors c
+				ON c.color_id =ip.color_id
+				INNER JOIN themes t
+				ON t.theme_id =ls.theme_id 
+				GROUP BY ls.theme_id,
+						t.theme_name,
+						ip.color_id,
+						c.color_name) tab))tab2
+WHERE row_number<=3;
+
+Theme                 |Color            |
+----------------------|-----------------|
+Technic               |Black            |
+Technic               |Light Bluish Gray|
+Technic               |Blue             |
+Arctic Technic        |Light Gray       |
+Arctic Technic        |White            |
+Arctic Technic        |Black            |
+Competition           |Black            |
+Competition           |Light Gray       |
+Competition           |Dark Turquoise   |
+Expert Builder        |Light Gray       |
+Expert Builder        |Black            |
+Expert Builder        |Yellow           |
+Model                 |Black            |
+Model                 |Light Bluish Gray|
+Model                 |Blue             |
+Airport               |Black            |
+Airport               |Light Gray       |
+Airport               |White            |
+Construction          |Black            |
+Construction          |Light Bluish Gray|
+Construction          |Yellow           |
+Farm                  |Black            |
+Farm                  |Light Bluish Gray|
+Farm                  |Blue             |
+Fire                  |Black            |
+Fire                  |Red              |
+Fire                  |Light Bluish Gray|
+
+-- 4. number OF SETS IN top10 themes by number of sets AND years WHEN SETS were issued
+-- the result show that for example technic theme consists of technic itself. also service packs (theme 443) has technic theme in it (453)
+
+SELECT DISTINCT t.theme_id AS "Theme ID", 
+				t.theme_name AS "Theme",
+		count(count (ls.set_num)) OVER (PARTITION BY t.theme_id) AS "Number of Sets",
+		min (ls.set_year) OVER (PARTITION BY t.theme_id)  || '-' || 
+		max (ls.set_year) OVER (PARTITION BY t.theme_id) AS "Years"
+FROM lego_sets ls
+INNER JOIN themes t
+ON t.theme_id =ls.theme_id 
+GROUP BY t.theme_id, t.theme_name, ls.set_year 
+ORDER BY 3 DESC
+LIMIT 10;
+
+Theme ID|Theme                |Number of Sets|Years    |
+--------|---------------------|--------------|---------|
+     505|Basic Set            |            41|1969-2017|
+     632|Town                 |            38|1978-2019|
+     516|Duplo and Explore    |            36|1976-2020|
+     504|Duplo                |            34|1972-2020|
+     497|Books                |            33|1955-2020|
+       1|Technic              |            30|1965-2020|
+       7|Construction         |            28|1984-2019|
+     227|Christmas            |            27|1977-2019|
+     507|Educational and Dacta|            26|1985-2020|
+     453|Technic              |            24|1973-2000|
